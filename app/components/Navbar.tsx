@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useTheme } from "./ThemeProvider";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -10,111 +11,179 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+const glassClasses =
+  "bg-background/60 backdrop-blur-xl border border-border/50 shadow-lg shadow-black/5";
 
+export default function Navbar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, toggle } = useTheme();
+
+  // Close mobile menu on Escape key
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [mobileOpen]);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border shadow-lg shadow-black/10"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <>
+      {/* ---- Desktop Pill (md+) ---- */}
+      <nav
+        className={`fixed top-4 left-1/2 z-50 hidden -translate-x-1/2 items-center gap-1 rounded-full px-2 py-2 md:flex ${glassClasses}`}
+        aria-label="Main navigation"
+      >
         <a
           href="#"
-          className="font-mono text-lg font-bold tracking-tight text-foreground"
+          className="rounded-full px-3 py-1.5 font-mono text-sm font-semibold tracking-tight text-foreground"
         >
           BGL<span className="text-accent">.</span>
         </a>
-
-        {/* Desktop nav */}
-        <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-muted transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </a>
-          ))}
+        {navLinks.map((link) => (
           <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-lg border border-accent bg-accent/10 px-4 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent/20"
+            key={link.href}
+            href={link.href}
+            className="rounded-full px-3 py-1.5 text-sm text-muted transition-colors duration-150 hover:bg-surface/60 hover:text-foreground"
           >
-            Resume
+            {link.label}
           </a>
-        </div>
+        ))}
+      </nav>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex flex-col gap-1.5 md:hidden"
-          aria-label="Toggle menu"
-        >
-          <motion.span
-            animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="block h-0.5 w-6 bg-foreground"
-          />
-          <motion.span
-            animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block h-0.5 w-6 bg-foreground"
-          />
-          <motion.span
-            animate={
-              mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
-            }
-            className="block h-0.5 w-6 bg-foreground"
-          />
-        </button>
-      </div>
-
-      {/* Mobile menu */}
+      {/* ---- Click-outside overlay (mobile) ---- */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-b border-border bg-background/95 backdrop-blur-lg md:hidden"
-          >
-            <div className="flex flex-col gap-4 px-6 py-6">
-              {navLinks.map((link) => (
-                <a
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-40 md:hidden"
+            onClick={() => setMobileOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* ---- Mobile FAB (below md) ---- */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 md:hidden">
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.nav
+              id="mobile-nav"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="flex flex-col items-end gap-2"
+              aria-label="Mobile navigation"
+            >
+              {navLinks.map((link, index) => (
+                <motion.a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-sm text-muted transition-colors hover:text-foreground"
+                  initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 20, scale: 0.8 }}
+                  transition={{
+                    duration: 0.2,
+                    delay: (navLinks.length - 1 - index) * 0.05,
+                  }}
+                  className={`rounded-full px-4 py-2 text-sm text-muted transition-colors duration-150 hover:text-foreground ${glassClasses}`}
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-fit rounded-lg border border-accent bg-accent/10 px-4 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent/20"
-              >
-                Resume
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+            </motion.nav>
+          )}
+        </AnimatePresence>
+
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className={`flex h-14 w-14 items-center justify-center rounded-full ${glassClasses}`}
+          aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+        >
+          <div className="flex flex-col gap-1.5">
+            <motion.span
+              animate={
+                mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }
+              }
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="block h-0.5 w-5 rounded-full bg-foreground"
+              aria-hidden="true"
+            />
+            <motion.span
+              animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className="block h-0.5 w-5 rounded-full bg-foreground"
+              aria-hidden="true"
+            />
+            <motion.span
+              animate={
+                mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
+              }
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="block h-0.5 w-5 rounded-full bg-foreground"
+              aria-hidden="true"
+            />
+          </div>
+        </button>
+      </div>
+
+      {/* ---- Theme Toggle (always visible, bottom-left) ---- */}
+      <button
+        onClick={toggle}
+        className="fixed bottom-6 left-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-foreground text-background shadow-lg shadow-black/10 transition-transform duration-200 hover:scale-105 active:scale-95"
+        aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          {theme === "light" ? (
+            <motion.svg
+              key="moon"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+              />
+            </motion.svg>
+          ) : (
+            <motion.svg
+              key="sun"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+              />
+            </motion.svg>
+          )}
+        </AnimatePresence>
+      </button>
+    </>
   );
 }

@@ -1,89 +1,86 @@
 "use client";
 
-import { motion } from "motion/react";
-import { useInView } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 
 export default function About() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="about" className="px-6 py-32">
-      <div ref={ref} className="mx-auto max-w-4xl">
+    <section id="about" className="px-6 py-24">
+      <div ref={ref} className="mx-auto max-w-3xl">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
-          <h2 className="mb-2 font-mono text-sm text-accent">01.</h2>
-          <h3 className="mb-12 text-3xl font-bold text-foreground">
+          <h2
+            className="mb-10 text-2xl font-bold text-foreground"
+            style={{ textWrap: "balance" }}
+          >
             About Me
-          </h3>
+          </h2>
         </motion.div>
 
-        <div className="grid gap-12 md:grid-cols-[3fr_2fr]">
+        <div className="grid gap-10 md:grid-cols-[3fr_2fr]">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-5"
+            transition={{ duration: 0.4, delay: 0.05 }}
+            className="space-y-4"
           >
-            <p className="leading-relaxed text-muted">
-              Hello! I&apos;m Bao Gia Le, a Software Engineering student
-              specializing in the intersection of{" "}
+            <p className="text-base leading-relaxed text-muted">
+              I&apos;m a Software Engineering student specializing in the
+              intersection of{" "}
               <span className="text-foreground">Full-Stack development</span>{" "}
               and{" "}
               <span className="text-foreground">Artificial Intelligence</span>.
-              I&apos;m passionate about building scalable, high-performance
-              applications that leverage modern web technologies and AI-driven
-              solutions.
+              I build scalable, high-performance applications that leverage
+              modern web technologies and AI-driven solutions.
             </p>
-            <p className="leading-relaxed text-muted">
-              I have experience building applications using{" "}
+            <p className="text-base leading-relaxed text-muted">
+              Experienced with{" "}
               <span className="text-foreground">React</span>,{" "}
               <span className="text-foreground">Node.js</span>, and{" "}
-              <span className="text-foreground">FastAPI</span>, with a focus on
+              <span className="text-foreground">FastAPI</span>, I focus on
               integrating machine learning models and containerized
-              microservices via Docker. My goal is to develop solutions that
-              optimize system efficiency and user experience.
+              microservices via Docker to optimize system efficiency and user
+              experience.
             </p>
-            <p className="leading-relaxed text-muted">
+            <p className="text-base leading-relaxed text-muted">
               Currently pursuing my B.S. in Software Engineering at St Cloud
-              State University (transferred from Ton Duc Thang University), I&apos;m
-              always looking for opportunities to grow and contribute to
-              meaningful projects.
+              State University, transferred from Ton Duc Thang University.
             </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-6"
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="flex flex-col gap-4"
           >
-            {/* Education cards */}
-            <div className="rounded-xl border border-border bg-surface p-6">
-              <p className="text-lg font-bold text-accent">SCSU</p>
-              <p className="mt-1 text-sm text-foreground">
+            <div className="rounded-lg border border-border p-5">
+              <p className="text-sm font-semibold text-foreground">
+                St Cloud State University
+              </p>
+              <p className="mt-1 text-sm text-muted">
                 B.S. Software Engineering
               </p>
               <p className="mt-0.5 text-xs text-muted">
                 Jan 2026 &ndash; Oct 2028 (expected)
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-surface p-6">
-              <p className="text-lg font-bold text-accent">TDTU</p>
-              <p className="mt-1 text-sm text-foreground">
+            <div className="rounded-lg border border-border p-5">
+              <p className="text-sm font-semibold text-foreground">
+                Ton Duc Thang University
+              </p>
+              <p className="mt-1 text-sm text-muted">
                 B.S. Software Engineering
               </p>
               <p className="mt-0.5 text-xs text-muted">
                 Oct 2022 &ndash; Oct 2025 &middot; GPA: 3.1
               </p>
-            </div>
-            <div className="rounded-xl border border-border bg-surface p-6">
-              <p className="text-3xl font-bold text-accent">2+</p>
-              <p className="mt-1 text-sm text-muted">Projects Shipped</p>
             </div>
           </motion.div>
         </div>
