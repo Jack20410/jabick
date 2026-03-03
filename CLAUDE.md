@@ -33,7 +33,9 @@ jabick/
 │       ├── ecommerce.jpg
 │       ├── taskapp.jpg
 │       └── ai-content.jpg
-├── next.config.ts          # Next.js config (currently default/empty)
+├── Dockerfile              # Multi-stage production build (node:22-alpine, standalone output)
+├── .dockerignore           # Files excluded from Docker build context
+├── next.config.ts          # Next.js config (standalone output mode)
 ├── tsconfig.json           # TypeScript config — strict, bundler resolution, `@/*` path alias
 ├── postcss.config.mjs      # PostCSS config — uses @tailwindcss/postcss plugin
 ├── eslint.config.mjs       # ESLint 9 flat config — next/core-web-vitals + next/typescript
@@ -116,6 +118,17 @@ npm run build && npm start
 ```
 
 Builds and serves the production bundle at `http://localhost:3000`.
+
+### Docker
+
+The app is containerized with a multi-stage `Dockerfile` using Next.js standalone output. Build and run:
+
+```sh
+docker build -t jabick .
+docker run --name jabick -p 3000:3000 jabick
+```
+
+Serves the production build at `http://localhost:3000`.
 
 ### Common Modifications
 
