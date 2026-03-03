@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#141414"/>
+  <rect x="40" y="40" width="180" height="370" rx="8" fill="#1e1e1e"/>
+  <rect x="60" y="70" width="140" height="16" rx="4" fill="#6366f1" opacity="0.3"/>
+  <rect x="60" y="110" width="140" height="12" rx="4" fill="#262626"/>
+  <rect x="60" y="135" width="140" height="12" rx="4" fill="#262626"/>
+  <rect x="60" y="160" width="120" height="12" rx="4" fill="#262626"/>
+  <rect x="60" y="200" width="140" height="16" rx="4" fill="#6366f1" opacity="0.3"/>
+  <rect x="60" y="235" width="140" height="12" rx="4" fill="#262626"/>
+  <rect x="60" y="260" width="100" height="12" rx="4" fill="#262626"/>
+  <rect x="250" y="40" width="510" height="50" rx="8" fill="#1e1e1e"/>
+  <rect x="270" y="55" width="200" height="20" rx="4" fill="#262626"/>
+  <rect x="250" y="110" width="160" height="145" rx="8" fill="#1e1e1e"/>
+  <rect x="425" y="110" width="160" height="145" rx="8" fill="#6366f1" opacity="0.1" stroke="#6366f1" stroke-width="1" opacity="0.3"/>
+  <rect x="600" y="110" width="160" height="145" rx="8" fill="#1e1e1e"/>
+  <rect x="250" y="275" width="160" height="135" rx="8" fill="#1e1e1e"/>
+  <rect x="425" y="275" width="160" height="135" rx="8" fill="#1e1e1e"/>
+  <rect x="600" y="275" width="160" height="135" rx="8" fill="#1e1e1e"/>
+  <rect x="270" y="130" width="120" height="10" rx="2" fill="#262626"/>
+  <rect x="270" y="150" width="80" height="10" rx="2" fill="#262626"/>
+  <text x="400" y="240" font-family="system-ui" font-size="14" fill="#6366f1" text-anchor="middle" opacity="0.6">Task Management App</text>
+</svg>
