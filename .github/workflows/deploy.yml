@@ -47,10 +47,10 @@ jobs:
             cd /home/${{ secrets.EC2_USERNAME }}/portfolio
             
             # pull the latest image
-            docker-compose pull
+            docker compose pull
             
             # restart the entire system (automatically replace the old container)
-            docker-compose up -d
+            docker compose up -d
             
             # clean up the system
             docker system prune -af
