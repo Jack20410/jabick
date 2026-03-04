@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # 1. Next.js application
+  jabick:
+    image: jabick/jabick:latest
+    container_name: jabick
+    restart: always
+    ports:
+      - "3000:3000"
+
+  # 2. Nginx acts as Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    restart: always
+    ports:
+      - "80:80" # handle traffic from port 80 of EC2
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf # attach the configuration file to Nginx
+    depends_on:
+      - jabick # ensure Next.js runs before Nginx
