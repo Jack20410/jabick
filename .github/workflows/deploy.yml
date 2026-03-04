@@ -28,7 +28,7 @@ jobs:
       - name: login to EC2 instance
         uses: appleboy/ssh-action@v0.1.10
         with: 
-          hostname: ${{ secrets.EC2_HOSTNAME }}
+          host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           scripts: |
