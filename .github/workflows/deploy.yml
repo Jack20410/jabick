@@ -26,7 +26,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/jabick:latest
 
       - name: login to EC2 instance
-        uses: aws-actions/amazon-ec2-login@v1
+        uses: appleboy/ssh-action@v0.1.10
         with: 
           hostname: ${{ secrets.EC2_HOSTNAME }}
           username: ${{ secrets.EC2_USERNAME }}
