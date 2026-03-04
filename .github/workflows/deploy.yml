@@ -1,0 +1,43 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/jabick:latest
+
+      - name: login to EC2 instance
+        uses: aws-actions/amazon-ec2-login@v1
+        with: 
+          hostname: ${{ secrets.EC2_HOSTNAME }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          scripts: |
+            # pull the latest Docker image
+            docker pull ${{ secrets.DOCKER_USERNAME }}/jabick:latest
+            # stop and remove the existing container
+            docker stop jabick || true
+            docker rm jabick || true
+            # run the new container
+            docker run -d --name jabick -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/jabick:latest
+            # prune the Docker system
+            docker system prune -f
