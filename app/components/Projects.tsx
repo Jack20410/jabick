@@ -9,9 +9,9 @@ const projects = [
     title: "E-Commerce Computers & Components",
     description:
       "Secure full-stack platform using Node.js, Express, and React with Google OAuth authentication. Real-time inventory updates via WebSockets, flexible MongoDB schema, and NGINX-based horizontal scaling for high availability.",
-    image: "/projects/ecommerce.jpg",
+    image: "/projects/computer.jpg",
     tags: ["Node.js", "Express", "React", "MongoDB", "WebSockets", "NGINX"],
-    github: "https://github.com/Jack20410",
+    github: "https://github.com/Jack20410/E-commerce-Computers-Selling",
     role: "Backend Developer",
     period: "Apr 2025 - Jun 2025",
   },
@@ -19,9 +19,9 @@ const projects = [
     title: "Car Rental System Management",
     description:
       "Microservices ecosystem using Node.js and FastAPI with JWT cross-service authentication and WebSocket real-time communication. Integrated MOMO payment gateway, containerized with Docker and Docker Compose.",
-    image: "/projects/taskapp.jpg",
+    image: "/projects/car-rental.jpg",
     tags: ["Node.js", "FastAPI", "MongoDB", "Docker", "JWT", "WebSockets"],
-    github: "https://github.com/Jack20410",
+    github: "https://github.com/Jack20410/Car-rental-system",
     role: "Backend Developer",
     period: "Mar 2025 - Apr 2025",
   },
