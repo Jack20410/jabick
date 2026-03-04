@@ -16,6 +16,7 @@ services:
     restart: always
     ports:
       - "80:80" # handle traffic from port 80 of EC2
+      - "443:443" # handle secure traffic from port 443 of EC2
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf # attach the configuration file to Nginx
       - /etc/letsencrypt:/etc/letsencrypt:ro # read only access to the Let's Encrypt certificate
