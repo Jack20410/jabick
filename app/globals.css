@@ -81,12 +81,12 @@ body::after {
 }
 
 body::before {
-  background-image: url("/backgrounds/light_minimal_bg.jpg");
+  background-image: var(--bg-light-url);
   opacity: 1;
 }
 
 body::after {
-  background-image: url("/backgrounds/dark_minimal_bg.png");
+  background-image: var(--bg-dark-url);
   opacity: 0;
 }
 

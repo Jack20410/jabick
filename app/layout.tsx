@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ThemeProvider from "./components/ThemeProvider";
+import { basePath } from "../basePath";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,7 +33,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html
+      lang="en"
+      className="scroll-smooth"
+      suppressHydrationWarning
+      style={
+        {
+          "--bg-light-url": `url(${basePath}/backgrounds/light_minimal_bg.jpg)`,
+          "--bg-dark-url": `url(${basePath}/backgrounds/dark_minimal_bg.png)`,
+        } as React.CSSProperties
+      }
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

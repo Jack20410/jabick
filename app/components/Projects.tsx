@@ -3,6 +3,7 @@
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import Image from "next/image";
+import { basePath } from "../../basePath";
 
 const projects = [
   {
@@ -59,7 +60,7 @@ export default function Projects() {
               {/* Project image */}
               <div className="relative mb-5 aspect-video w-full overflow-hidden rounded-lg border border-border bg-surface">
                 <Image
-                  src={project.image}
+                  src={`${basePath}${project.image}`}
                   alt={`Screenshot of ${project.title}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 768px"
